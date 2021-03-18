@@ -3,17 +3,27 @@ import React, { useEffect } from 'react';
 
 const Cockpit = (props) => {
 
+
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
-    });
+        setTimeout(() => {
+            alert('saved data to cloud');
+        }, 1000);
+
+        return () => {
+            console.log('[Cockpit.js] cleanup work in useEffect');
+        }
+    // note if you want to act like componentDidMount use empty array []
+    // use nothing if you want to run for every update cycle
+    }, [props.persons]);
 
     const assignedClasses = [];
 
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         assignedClasses.push('red');
     }
 
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         assignedClasses.push('bold');
     }
 
@@ -30,4 +40,4 @@ const Cockpit = (props) => {
     );
 };
 
-export default Cockpit;
+export default React.memo(Cockpit);
