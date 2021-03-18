@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 
 import Person from './Person/Person';
 
+
 class Persons extends PureComponent {
 
     // static getDerivedStateFromProps(props, state) {
@@ -42,16 +43,18 @@ class Persons extends PureComponent {
     render() {
         console.log("PERSONS.js RENDER", this.props);
         return this.props.persons.map((person, index) => {
-                return (
-                    <Person
-                      name={person.name}
-                      age={person.age}
-                      click={() => this.props.clicked(index)}
-                      key={person.id}
-                      changed={(event) => this.props.changed(event, person.id)}
-                  />
-                );
-            })
+                    return (
+                        <Person
+                          name={person.name}
+                          age={person.age}
+                          click={() => this.props.clicked(index)}
+                          key={person.id}
+                          changed={(event) => this.props.changed(event, person.id)}
+                      />
+                    );
+                })
+
+
     }
 }
 
