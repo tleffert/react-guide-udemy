@@ -1,9 +1,14 @@
 import './App.css';
 import React, { Component } from 'react';
-import Person from './Person/Person';
-
+import Persons from './components/Persons/Persons';
+import Cockpit from './components/Cockpit/Cockpit'
 
 class App extends Component {
+
+    constructor(props) {
+        super();
+        console.log("APPJS CONSTRUCT");
+    }
 
     state = {
         persons: [
@@ -11,6 +16,24 @@ class App extends Component {
             { id:'asdfasf', name: 'Dude', age: 45}
         ],
         showPersons: false
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log("getDerivedStateFromProps", props, state);
+        return state;
+    }
+
+    componentDidMount() {
+        console.log("COMPONENT DID MOUNT");
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[APP] shouldComponentUpdate');
+        return true;
+    }
+
+    componentDidUpdate() {
+        console.log('[APP] componentDidUpdate');
     }
 
     switchNameHandler = (newName) => {
@@ -59,7 +82,7 @@ class App extends Component {
 
 
     render() {
-
+        console.log("RENDER");
         const style = {
             backgroundColor: 'green',
             cursor: 'pointer',
@@ -73,28 +96,12 @@ class App extends Component {
 
         if (this.state.showPersons) {
             persons = (
-                <div>
-                {this.state.persons.map((person, index) => {
-                    return (
-                        <Person
-                          name={person.name}
-                          age={person.age}
-                          click={() => this.deletePersonHandler(index)}
-                          changed={this.nameChangeHandler}
-                          key={person.id}
-                          changed={(event) => this.nameChangeHandler(event, person.id)}
-                          />
-                    );
-                })}
-              </div>
+                <Persons
+                    persons={this.state.persons}
+                    clicked={this.deletePersonHandler}
+                    changed={this.nameChangeHandler}
+                />
           );
-
-          // style.backgroundColor = 'red'
-          // style[':hover'] = {
-          //     backgroundColor: 'salmon',
-          //     color: 'black'
-          // }
-
         }
 
         const classes = [];
@@ -108,13 +115,12 @@ class App extends Component {
 
       return (
             <div className="App">
-              <h1>HI I'M A REACT APP</h1>
-              <p className={classes.join(' ')}>Stuff works</p>
-              <button
-                alt={this.state.showPersons}
-                onClick={this.togglePersonsHandler}>
-                    Switch Name
-                </button>
+              <Cockpit
+                title={this.props.appTitle}
+                showPersons={this.state.showPersons}
+                persons={this.state.persons}
+                clicked={this.togglePersonsHandler}
+              />
               { persons }
             </div>
       );
