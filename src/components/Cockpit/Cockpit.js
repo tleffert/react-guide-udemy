@@ -1,8 +1,13 @@
 import styles from './Cockpit.module.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const Cockpit = (props) => {
 
+    const toggleBtnRef = useRef(null);
+
+    useEffect(() => {
+        toggleBtnRef.current.click();
+    }, []);
 
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
@@ -33,7 +38,9 @@ const Cockpit = (props) => {
             <p className={assignedClasses.join(' ')}>Stuff works</p>
             <button
                 alt={props.showPersons}
-                onClick={props.clicked}>
+                onClick={props.clicked}
+                ref={toggleBtnRef}
+            >
                 Switch Name
             </button>
         </div>
